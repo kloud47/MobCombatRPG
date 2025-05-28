@@ -6,8 +6,8 @@
 #include "AnimInstances/BaseAnimInstance.h"
 #include "CharacterAnimInstance.generated.h"
 
+class ABaseCharacter;
 class UCharacterMovementComponent;
-class AWarriorCharacter;
 /**
  * 
  */
@@ -20,7 +20,7 @@ public:
 	virtual void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 protected:
 	UPROPERTY()
-	AWarriorCharacter* OwningCharacter;
+	ABaseCharacter* OwningCharacter;
 
 	UPROPERTY()
 	UCharacterMovementComponent* OwningCharacterMovementComponent;

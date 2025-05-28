@@ -6,6 +6,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "WarriorDebugHelper.h"
 #include "WarriorGamePlayTags.h"
+#include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/Input/WarriorInputComponent.h"
@@ -36,6 +37,18 @@ AWarriorCharacter::AWarriorCharacter()
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	
+}
+
+void AWarriorCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (WarriorAbilitySystemComponent && WarriorAttributeSet)
+	{
+		const FString AscText = FString::Printf(TEXT("Owner Actor: %s, Avatar Actor: %s"), *WarriorAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *WarriorAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
+		Debug::Print(TEXT("Ability System Component Valid.") + AscText, FColor::Green);
+		Debug::Print(TEXT("AttributeSet Valid.") + AscText, FColor::Green);
+	}
 }
 
 void AWarriorCharacter::BeginPlay()

@@ -3,12 +3,12 @@
 
 #include "AnimInstances/CharacterAnimInstance.h"
 
-#include "Characters/WarriorCharacter.h"
+#include "Characters/BaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 void UCharacterAnimInstance::NativeInitializeAnimation()
 {
-	OwningCharacter = Cast<AWarriorCharacter>(TryGetPawnOwner());
+	OwningCharacter = Cast<ABaseCharacter>(TryGetPawnOwner());
 	
 	if (OwningCharacter)
 	{
