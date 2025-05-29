@@ -11,6 +11,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/Input/WarriorInputComponent.h"
 #include "DataAssets/Input/DA_InputConfig.h"
+#include "DataAssets/StartupData/DA_StartupHeroData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -48,6 +49,11 @@ void AWarriorCharacter::PossessedBy(AController* NewController)
 		const FString AscText = FString::Printf(TEXT("Owner Actor: %s, Avatar Actor: %s"), *WarriorAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *WarriorAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
 		Debug::Print(TEXT("Ability System Component Valid.") + AscText, FColor::Green);
 		Debug::Print(TEXT("AttributeSet Valid.") + AscText, FColor::Green);
+
+		if (UDataAsset_StartupDataBase* LoadedData = CharacterStartupData.LoadSynchronous())
+		{
+			LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
+		}
 	}
 }
 

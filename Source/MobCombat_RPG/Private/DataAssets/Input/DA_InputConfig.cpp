@@ -12,6 +12,5 @@ const UInputAction* UDA_InputConfig::FindInputActionByTag(const FGameplayTag& In
 			return InputActionConfig.InputAction;
 		}
 	}
-
 	return nullptr;
 }
