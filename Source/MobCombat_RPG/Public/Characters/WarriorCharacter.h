@@ -7,6 +7,7 @@
 #include "Characters/BaseCharacter.h"
 #include "WarriorCharacter.generated.h"
 
+class UHeroCombatComponent;
 struct FInputActionValue;
 class UDA_InputConfig;
 class UCameraComponent;
@@ -32,10 +33,14 @@ protected:
 private:
 #pragma region Components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<USpringArmComponent> CameraBoom;
+	USpringArmComponent* CameraBoom;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UCameraComponent> CameraKun;
+	UCameraComponent* CameraKun;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	UHeroCombatComponent* HeroCombatComponent;
+	
 #pragma endregion
 
 #pragma region Inputs
@@ -45,4 +50,7 @@ private:
 	void Input_Move(const FInputActionValue& Value);
 	void Input_Look(const FInputActionValue& Value);
 #pragma endregion
+
+public:
+	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }
 };
