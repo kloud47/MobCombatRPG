@@ -7,9 +7,7 @@
 #include "DataAssets/Input/DA_InputConfig.h"
 #include "WarriorInputComponent.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class MOBCOMBAT_RPG_API UWarriorInputComponent : public UEnhancedInputComponent
 {
@@ -17,6 +15,9 @@ class MOBCOMBAT_RPG_API UWarriorInputComponent : public UEnhancedInputComponent
 public:
 	template<class UserObject, typename CallbackFunc>
 	void BindNativeInputAction(const UDA_InputConfig* InputConfig, const FGameplayTag& InputTag, ETriggerEvent TriggerEvent, UserObject* ContextObj, CallbackFunc Callback);
+
+	template<class UserObject, typename CallbackFunc>
+	void BindAbilityInputAction(const UDA_InputConfig* InputConfig, UserObject* ContextObj, CallbackFunc InputPressedFunc, CallbackFunc InputReleasedFunc);
 };
 
 template <class UserObject, typename CallbackFunc>
@@ -30,3 +31,17 @@ void UWarriorInputComponent::BindNativeInputAction(const UDA_InputConfig* InputC
 		BindAction(InputAction, TriggerEvent, ContextObj, Callback);
 	}
 }
+
+template <class UserObject, typename CallbackFunc>
+void UWarriorInputComponent::BindAbilityInputAction(const UDA_InputConfig* InputConfig, UserObject* ContextObj, 
+	CallbackFunc InputPressedFunc, CallbackFunc InputReleasedFunc)
+{
+	checkf(InputConfig, TEXT("InputConfig data asset was NULL, cannot proceed with Input "));
+
+	if (const FWarriorInputActionConfig& AbilityInputActionConfig : AbilityInputActions)
+	{
+		
+	}
+}
+
+
