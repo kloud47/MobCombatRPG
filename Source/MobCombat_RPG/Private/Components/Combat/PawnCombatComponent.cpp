@@ -22,7 +22,7 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegis
 	Debug::Print(WeaponString, FColor::Cyan);
 }
 
-AWarriorWeaponBase* UPawnCombatComponent::GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const
+AWarriorWeaponBase* UPawnCombatComponent::GetCharacterCarriedWeaponByTag(const FGameplayTag InWeaponTagToGet) const
 {
 	if (CharacterCarriedWeaponsMap.Contains(InWeaponTagToGet))
 	{

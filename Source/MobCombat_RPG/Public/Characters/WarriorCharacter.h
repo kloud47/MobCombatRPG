@@ -12,6 +12,7 @@ struct FInputActionValue;
 class UDA_InputConfig;
 class UCameraComponent;
 class USpringArmComponent;
+struct FGameplayTag;
 /**
  * 
  */
@@ -40,7 +41,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	UHeroCombatComponent* HeroCombatComponent;
-	
 #pragma endregion
 
 #pragma region Inputs
@@ -49,6 +49,8 @@ private:
 
 	void Input_Move(const FInputActionValue& Value);
 	void Input_Look(const FInputActionValue& Value);
+	void Input_AbilityInputPressed(FGameplayTag InInputTag);
+	void Input_AbilityInputReleased(FGameplayTag InInputTag);
 #pragma endregion
 
 public:

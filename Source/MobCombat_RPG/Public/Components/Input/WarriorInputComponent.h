@@ -38,9 +38,12 @@ void UWarriorInputComponent::BindAbilityInputAction(const UDA_InputConfig* Input
 {
 	checkf(InputConfig, TEXT("InputConfig data asset was NULL, cannot proceed with Input "));
 
-	if (const FWarriorInputActionConfig& AbilityInputActionConfig : AbilityInputActions)
+	for (const FWarriorInputActionConfig& AbilityInputActionConfig : InputConfig->AbilityInputActions)
 	{
-		
+		if (!AbilityInputActionConfig.IsValid()) continue;
+		// This Input-Tag is passed for the callback function to use:
+		BindAction(AbilityInputActionConfig.InputAction, ETriggerEvent::Started, ContextObj, InputPressedFunc, AbilityInputActionConfig.InputTag);
+		BindAction(AbilityInputActionConfig.InputAction, ETriggerEvent::Completed, ContextObj, InputReleasedFunc, AbilityInputActionConfig.InputTag);
 	}
 }
 

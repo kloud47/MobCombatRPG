@@ -21,7 +21,7 @@ public:
 	void RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister, AWarriorWeaponBase* InWeaponToRegister, bool bRegisterAsEquippedWeapon = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Warrior|Combat")
-	AWarriorWeaponBase* GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const;
+	AWarriorWeaponBase* GetCharacterCarriedWeaponByTag(const FGameplayTag InWeaponTagToGet) const;
 	
 	UPROPERTY(BlueprintReadWrite, Category = "Warrior|Combat")
 	FGameplayTag CurrentEquippedWeaponTag;

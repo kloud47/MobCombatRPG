@@ -14,4 +14,6 @@ namespace WarriorGamePlayTags
 
 	/** Player Tags **/
 	MOBCOMBAT_RPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe);
+	MOBCOMBAT_RPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Equip_Axe);
+	MOBCOMBAT_RPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Unequip_Axe);
 }

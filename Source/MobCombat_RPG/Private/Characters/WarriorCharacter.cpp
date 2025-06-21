@@ -1,6 +1,5 @@
 // Priyanshu Shukla All Rights Reserved
 
-
 #include "Characters/WarriorCharacter.h"
 
 #include "EnhancedInputSubsystems.h"
@@ -52,7 +51,7 @@ void AWarriorCharacter::PossessedBy(AController* NewController)
 		Debug::Print(TEXT("Ability System Component Valid.") + AscText, FColor::Green);
 		Debug::Print(TEXT("AttributeSet Valid.") + AscText, FColor::Green);
 
-		if (UDataAsset_StartupDataBase* LoadedData = CharacterStartupData.LoadSynchronous())
+		if (UDA_StartupHeroData* LoadedData = CharacterStartupData.LoadSynchronous())
 		{
 			LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
 		}
@@ -79,8 +78,12 @@ void AWarriorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	UWarriorInputComponent* WarriorInputComponent = CastChecked<UWarriorInputComponent>(PlayerInputComponent);
 
+	// Binding on basis of Tags:
 	WarriorInputComponent->BindNativeInputAction(InputConfig, WarriorGamePlayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 	WarriorInputComponent->BindNativeInputAction(InputConfig, WarriorGamePlayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+
+	// Binding on basis of Events:
+	WarriorInputComponent->BindAbilityInputAction(InputConfig, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);	
 }
 
 void AWarriorCharacter::Input_Move(const FInputActionValue& Value)
@@ -114,3 +117,14 @@ void AWarriorCharacter::Input_Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookDirection.Y);
 	}
 }
+
+void AWarriorCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	WarriorAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
+}
+
+void AWarriorCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	WarriorAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
+}
+

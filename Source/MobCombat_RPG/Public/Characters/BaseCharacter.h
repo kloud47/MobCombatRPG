@@ -7,7 +7,7 @@
 #include "GameFramework/Character.h"
 #include "BaseCharacter.generated.h"
 
-class UDataAsset_StartupDataBase;
+class UDA_StartupHeroData;
 class UMyAttributeSet;
 class UWarriorAbilitySystemComponent;
 
@@ -20,7 +20,7 @@ public:
 	ABaseCharacter();
 
 	//~ Begin IAbilitySystemInterface Interface.
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	//~ End IAbilitySystemInterface Interface.
 
 protected:
@@ -35,7 +35,7 @@ protected:
 	UMyAttributeSet* WarriorAttributeSet;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData")
-	TSoftObjectPtr<UDataAsset_StartupDataBase> CharacterStartupData;
+	TSoftObjectPtr<UDA_StartupHeroData> CharacterStartupData;// Loads the Startup Abilities & provides tags to other Abilities
 	
 public:
 	FORCEINLINE UWarriorAbilitySystemComponent* GetWarriorAbilitySystemComponent() const {return WarriorAbilitySystemComponent;}
