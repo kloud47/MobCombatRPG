@@ -3,25 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameplayTagContainer.h"
 #include "DataAssets/StartupData/DataAsset_StartupDataBase.h"
+#include "WarriorTypes/WarriorStructTypes.h"
 #include "DA_StartupHeroData.generated.h"
 
 class UWarriorHeroGameplayAbility;
-
-USTRUCT(BlueprintType)
-struct FWarriorHeroAbilitySet
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "InputTag"))
-	FGameplayTag InputTag;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<UWarriorHeroGameplayAbility> AbilityToGrant;
-
-	bool IsValid() const;
-};
 /**
  * 
  */

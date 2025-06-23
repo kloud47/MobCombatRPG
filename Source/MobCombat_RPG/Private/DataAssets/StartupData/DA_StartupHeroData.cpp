@@ -6,12 +6,6 @@
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/WarriorHeroGameplayAbility.h"
 
-
-bool FWarriorHeroAbilitySet::IsValid() const
-{
-	return InputTag.IsValid() && AbilityToGrant;
-}
-
 void UDA_StartupHeroData::GiveToAbilitySystemComponent(UWarriorAbilitySystemComponent* InASCToGive, int32 ApplyLevel)
 {
 	Super::GiveToAbilitySystemComponent(InASCToGive, ApplyLevel);
