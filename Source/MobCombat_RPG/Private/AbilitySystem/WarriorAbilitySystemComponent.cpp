@@ -9,7 +9,6 @@
 
 void UWarriorAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
 {
-	Debug::Print("Ability Pressed. ---------------");
 	if (!InInputTag.IsValid()) return;
 
 	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
