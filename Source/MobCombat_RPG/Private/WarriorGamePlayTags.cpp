@@ -27,4 +27,7 @@ namespace WarriorGamePlayTags
 	// The ability tags help in Notifying about the abilities:
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Equip_Axe, "Player.Event.Equip.Axe");
 	UE_DEFINE_GAMEPLAY_TAG(PLayer_Event_Unequip_Axe, "Player.Event.Unequip.Axe");
+
+	// Extra status tags for special moves or abilities
+	UE_DEFINE_GAMEPLAY_TAG(Player_Status_JumpToFinisher, "Player.Status.JumpToFinisher");
 }
