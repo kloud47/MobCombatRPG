@@ -5,7 +5,7 @@
 
 namespace WarriorGamePlayTags
 {
-	/** Input Tags **/
+	/** Input Tags ------------------------------------------------------------**/
 	// These ability tags help identify the ability and Activates them:
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Move, "InputTag.Move");
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Look, "InputTag.Look");
@@ -15,7 +15,7 @@ namespace WarriorGamePlayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_HeavyAttack_Axe, "InputTag.HeavyAttack.Axe");
 	
 
-	/** Player Tags **/
+	/** Player Tags -----------------------------------------------------------**/
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe, "Player.Weapon.Axe");
 
 	// These ability tags help in Blocking, Canceling of other abilities:
@@ -30,4 +30,9 @@ namespace WarriorGamePlayTags
 
 	// Extra status tags for special moves or abilities
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_JumpToFinisher, "Player.Status.JumpToFinisher");
+
+	
+	/** Enemy Tags ------------------------------------------------------------**/
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon, "Enemy.Weapon");
+	
 }

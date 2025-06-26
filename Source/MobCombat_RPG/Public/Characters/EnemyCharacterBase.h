@@ -18,11 +18,17 @@ public:
 	AEnemyCharacterBase();
 
 protected:
+	//~ Begin APawn Interface.
+	virtual void PossessedBy(AController* NewController) override;
+	//~ End APawn Interface.
+	
 #pragma region Components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UEnemyCombatComponent> EnemyCombatComponent;
 #pragma endregion
 
+private:
+	void InitEnemyStartupData() const;
 public:
 	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const {return EnemyCombatComponent;}
 };

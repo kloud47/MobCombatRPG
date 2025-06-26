@@ -7,7 +7,7 @@
 #include "GameFramework/Character.h"
 #include "BaseCharacter.generated.h"
 
-class UDA_StartupHeroData;
+class UDataAsset_StartupDataBase;
 class UMyAttributeSet;
 class UWarriorAbilitySystemComponent;
 
@@ -35,7 +35,7 @@ protected:
 	UMyAttributeSet* WarriorAttributeSet;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData")
-	TSoftObjectPtr<UDA_StartupHeroData> CharacterStartupData;// Loads the Startup Abilities & provides tags to other Abilities
+	TSoftObjectPtr<UDataAsset_StartupDataBase> CharacterStartupData;// Loads the Startup Abilities & provides tags to other Abilities
 	
 public:
 	FORCEINLINE UWarriorAbilitySystemComponent* GetWarriorAbilitySystemComponent() const {return WarriorAbilitySystemComponent;}

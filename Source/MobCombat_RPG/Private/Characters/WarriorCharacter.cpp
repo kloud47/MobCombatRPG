@@ -47,11 +47,11 @@ void AWarriorCharacter::PossessedBy(AController* NewController)
 
 	if (WarriorAbilitySystemComponent && WarriorAttributeSet)
 	{
-		const FString AscText = FString::Printf(TEXT("Owner Actor: %s, Avatar Actor: %s"), *WarriorAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *WarriorAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
-		Debug::Print(TEXT("Ability System Component Valid.") + AscText, FColor::Green);
-		Debug::Print(TEXT("AttributeSet Valid.") + AscText, FColor::Green);
+		// const FString AscText = FString::Printf(TEXT("Owner Actor: %s, Avatar Actor: %s"), *WarriorAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *WarriorAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
+		// Debug::Print(TEXT("Ability System Component Valid.") + AscText, FColor::Green);
+		// Debug::Print(TEXT("AttributeSet Valid.") + AscText, FColor::Green);
 
-		if (UDA_StartupHeroData* LoadedData = CharacterStartupData.LoadSynchronous())
+		if (UDA_StartupHeroData* LoadedData = Cast<UDA_StartupHeroData>(CharacterStartupData.LoadSynchronous()))
 		{
 			LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
 		}
