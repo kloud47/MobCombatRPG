@@ -34,4 +34,9 @@ void ABaseCharacter::PossessedBy(AController* NewController)
 	}
 }
 
+UPawnCombatComponent* ABaseCharacter::GetPawnCombatComponent() const
+{
+	return nullptr;
+}
+
 

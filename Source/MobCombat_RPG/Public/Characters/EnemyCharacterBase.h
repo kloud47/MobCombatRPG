@@ -17,6 +17,10 @@ class MOBCOMBAT_RPG_API AEnemyCharacterBase : public ABaseCharacter
 public:
 	AEnemyCharacterBase();
 
+	//~ Begin PawnCombatInterface Interface.Add commentMore actions
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	//~ End PawnCombatInterface Interface
+
 protected:
 	//~ Begin APawn Interface.
 	virtual void PossessedBy(AController* NewController) override;

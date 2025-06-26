@@ -26,6 +26,11 @@ AEnemyCharacterBase::AEnemyCharacterBase()
 	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>("EnemyCombatComponent");
 }
 
+UPawnCombatComponent* AEnemyCharacterBase::GetPawnCombatComponent() const
+{
+	return EnemyCombatComponent;
+}
+
 void AEnemyCharacterBase::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -51,7 +56,7 @@ void AEnemyCharacterBase::InitEnemyStartupData() const
 							Debug::Print("Enemy startup data Loaded", FColor::Green);
 						}
 						else
-						{ne
+						{
 							Debug::Print("Failed to load Enemy startup data", FColor::Green);
 						}
 				})

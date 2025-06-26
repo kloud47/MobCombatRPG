@@ -23,6 +23,10 @@ class MOBCOMBAT_RPG_API AWarriorCharacter : public ABaseCharacter
 public:
 	AWarriorCharacter();
 
+	//~ Begin PawnCombatInterface Interface.Add commentMore actions
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	//~ End PawnCombatInterface Interface
+
 protected:
 	//~ Begin APawn Interface.
 	virtual void PossessedBy(AController* NewController) override;
