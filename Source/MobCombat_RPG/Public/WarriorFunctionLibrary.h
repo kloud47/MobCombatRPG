@@ -35,6 +35,6 @@ public:
 
 	static UPawnCombatComponent* NativeGetPawnCombatComponentFromActor(AActor* InActor);
 
-	UFUNCTION(BlueprintCallable, Category = "Warrior|FunctionLibrary", meta = (DisplayName="Does Actor Have Gameplay Tag", ExpandEnumAsExecs="OutValidType"))
+	UFUNCTION(BlueprintCallable, Category = "Warrior|FunctionLibrary", meta = (DisplayName="Get Pawn Combat Component From Actor", ExpandEnumAsExecs="OutValidType"))
 	static UPawnCombatComponent* BP_GetPawnCombatComponentFromActor(AActor* InActor,EWarriorValidType& OutValidType);
 };

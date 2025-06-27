@@ -14,21 +14,7 @@ void UDataAsset_StartupDataBase::GiveToAbilitySystemComponent(UWarriorAbilitySys
 	GrantAbilities(ActivateOnGivenAbilities, InASCToGive, ApplyLevel);
 	GrantAbilities(ReactiveAbilities, InASCToGive, ApplyLevel);
 
-	if (!StartupGameplayEffect.IsEmpty())
-	{
-		for (const TSubclassOf<UGameplayEffect>& GE_Class : StartupGameplayEffect)
-		{
-			if (!GE_Class) continue;
-
-			UGameplayEffect* GE_Class_CDO = GE_Class->GetDefaultObject<UGameplayEffect>();
-
-			InASCToGive->ApplyGameplayEffectToSelf(
-				GE_Class_CDO,
-				ApplyLevel,
-				InASCToGive->MakeEffectContext()
-			);
-		}
-	}
+	ApplyGameplayEffectOnStartup(InASCToGive, ApplyLevel);
 }
 
 void UDataAsset_StartupDataBase::GrantAbilities(TArray<TSubclassOf<UWarriorGameplayAbility>>& InAbilitiesToGive,
@@ -45,5 +31,24 @@ void UDataAsset_StartupDataBase::GrantAbilities(TArray<TSubclassOf<UWarriorGamep
 		AbilitySpec.Level = ApplyLevel;
 		
 		InASCToGive->GiveAbility(AbilitySpec);
+	}
+}
+
+void UDataAsset_StartupDataBase::ApplyGameplayEffectOnStartup(UWarriorAbilitySystemComponent* InASCToGive, int32 ApplyLevel)
+{
+	if (!StartupGameplayEffect.IsEmpty())
+	{
+		for (const TSubclassOf<UGameplayEffect>& GE_Class : StartupGameplayEffect)
+		{
+			if (!GE_Class) continue;
+
+			UGameplayEffect* GE_Class_CDO = GE_Class->GetDefaultObject<UGameplayEffect>();
+
+			InASCToGive->ApplyGameplayEffectToSelf(
+				GE_Class_CDO,
+				ApplyLevel,
+				InASCToGive->MakeEffectContext()
+			);
+		}
 	}
 }
