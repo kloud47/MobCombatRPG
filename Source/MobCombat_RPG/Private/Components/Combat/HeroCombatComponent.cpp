@@ -34,13 +34,28 @@ void UHeroCombatComponent::OnHitTargetActor(AActor* HitActor)
 	Data.Instigator = GetOwningPawn();
 	Data.Target = HitActor;
 
+	// This triggers the Blueprint to perform the ((ApplyDamage)) Methods:
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
 		GetOwningPawn(),
 		WarriorGamePlayTags::Shared_Event_MeleeHit,
 		Data
 	);
+
+	// This is done to activate ability => to change Global Time Dilation for a short duration of Time:
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		GetOwningPawn(),
+		WarriorGamePlayTags::Player_Event_HitPause,
+		
+		// TODO: Add the identifier for light or heavy Attack in payload:
+		FGameplayEventData() // This is empty:
+	);
 }
 
 void UHeroCombatComponent::OnWeaponPulledFromTargetActor(AActor* InteractedActor)
 {
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		GetOwningPawn(),
+		WarriorGamePlayTags::Player_Event_HitPause,
+		FGameplayEventData() // This is empty:
+	);
 }

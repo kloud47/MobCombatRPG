@@ -22,6 +22,8 @@ class MOBCOMBAT_RPG_API UMyAttributeSet : public UAttributeSet
 public:
 	UMyAttributeSet();
 
+	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
+
 	UPROPERTY(BlueprintReadOnly, Category = "Health")
 	FGameplayAttributeData CurrentHealth;
 	ATTRIBUTE_ACCESSORS(UMyAttributeSet, CurrentHealth)
@@ -45,4 +47,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Damage")
 	FGameplayAttributeData DefensePower;
 	ATTRIBUTE_ACCESSORS(UMyAttributeSet, DefensePower)
+
+	// Meta or Placeholder attributes:
+	UPROPERTY(BlueprintReadOnly, Category = "Damage")
+	FGameplayAttributeData DamageTaken;
+	ATTRIBUTE_ACCESSORS(UMyAttributeSet, DamageTaken)
 };

@@ -48,6 +48,7 @@ FGameplayEffectSpecHandle UWarriorHeroGameplayAbility::MakeHeroDamageEffectSpecH
 		ContextHandle
 	);
 
+	// Below code id for Adding BaseDamage & combo count -> light & Heavy Attack ||| in => pair<Tag, float>
 	EffectSpecHandle.Data->SetSetByCallerMagnitude(
 		WarriorGamePlayTags::Shared_SetByCaller_BaseDamage,
 		InWeaponBaseDamage
