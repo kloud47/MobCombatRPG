@@ -10,6 +10,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/Combat/HeroCombatComponent.h"
 #include "Components/Input/WarriorInputComponent.h"
+#include "Components/UI/HeroUIComponent.h"
 #include "DataAssets/Input/DA_InputConfig.h"
 #include "DataAssets/StartupData/DA_StartupHeroData.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -44,6 +45,11 @@ AWarriorCharacter::AWarriorCharacter()
 UPawnCombatComponent* AWarriorCharacter::GetPawnCombatComponent() const
 {
 	return HeroCombatComponent;
+}
+
+UPawnUIComponent* AWarriorCharacter::GetPawnUIComponent() const
+{
+	return HeroUIComponent;
 }
 
 void AWarriorCharacter::PossessedBy(AController* NewController)

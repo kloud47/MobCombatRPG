@@ -5,6 +5,8 @@
 
 #include "GameplayEffectExtension.h"
 #include "WarriorDebugHelper.h"
+#include "WarriorFunctionLibrary.h"
+#include "WarriorGamePlayTags.h"
 
 UMyAttributeSet::UMyAttributeSet()
 {
@@ -52,9 +54,9 @@ void UMyAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModC
 		//TODO::Notify the UI 
 
 		//TODO::Handle character death
-		// if (NewCurrentHealth == 0.f)
-		// {
-		//
-		// }
+		if (NewCurrentHealth == 0.f)
+		{
+			UWarriorFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), WarriorGamePlayTags::Shared_Status_Dead);	
+		}
 	}
 }

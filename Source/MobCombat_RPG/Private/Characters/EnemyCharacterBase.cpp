@@ -5,6 +5,7 @@
 
 #include "WarriorDebugHelper.h"
 #include "Components/Combat/EnemyCombatComponent.h"
+#include "Components/UI/EnemyUIComponent.h"
 #include "DataAssets/StartupData/DA_StartupEnemyData.h"
 #include "Engine/AssetManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -29,6 +30,11 @@ AEnemyCharacterBase::AEnemyCharacterBase()
 UPawnCombatComponent* AEnemyCharacterBase::GetPawnCombatComponent() const
 {
 	return EnemyCombatComponent;
+}
+
+UPawnUIComponent* AEnemyCharacterBase::GetPawnUIComponent() const
+{
+	return EnemyUIComponent;
 }
 
 void AEnemyCharacterBase::PossessedBy(AController* NewController)
