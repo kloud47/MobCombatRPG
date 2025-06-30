@@ -40,6 +40,8 @@ AWarriorCharacter::AWarriorCharacter()
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 
 	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
+	
+	HeroUIComponent = CreateDefaultSubobject<UHeroUIComponent>(TEXT("HeroUIComponent"));
 }
 
 UPawnCombatComponent* AWarriorCharacter::GetPawnCombatComponent() const
@@ -48,6 +50,11 @@ UPawnCombatComponent* AWarriorCharacter::GetPawnCombatComponent() const
 }
 
 UPawnUIComponent* AWarriorCharacter::GetPawnUIComponent() const
+{
+	return HeroUIComponent;
+}
+
+UHeroUIComponent* AWarriorCharacter::GetHeroUIComponent() const
 {
 	return HeroUIComponent;
 }

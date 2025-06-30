@@ -24,7 +24,9 @@ AEnemyCharacterBase::AEnemyCharacterBase()
 	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 1000.f;
 
-	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>("EnemyCombatComponent");
+	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>(TEXT("EnemyCombatComponent"));
+
+	EnemyUIComponent = CreateDefaultSubobject<UEnemyUIComponent>(TEXT("EnemyUIComponent"));
 }
 
 UPawnCombatComponent* AEnemyCharacterBase::GetPawnCombatComponent() const
@@ -33,6 +35,11 @@ UPawnCombatComponent* AEnemyCharacterBase::GetPawnCombatComponent() const
 }
 
 UPawnUIComponent* AEnemyCharacterBase::GetPawnUIComponent() const
+{
+	return EnemyUIComponent;
+}
+
+UEnemyUIComponent* AEnemyCharacterBase::GetEnemyUIComponent() const
 {
 	return EnemyUIComponent;
 }
