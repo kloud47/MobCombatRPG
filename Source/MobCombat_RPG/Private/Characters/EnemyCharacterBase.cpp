@@ -66,7 +66,7 @@ void AEnemyCharacterBase::InitEnemyStartupData() const
 						if (UDA_StartupEnemyData* LoadedData = Cast<UDA_StartupEnemyData>(CharacterStartupData.Get()))
 						{
 							LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
-							Debug::Print("Enemy startup data Loaded", FColor::Green);
+							// Debug::Print("Enemy startup data Loaded", FColor::Green);
 						}
 						else
 						{
