@@ -21,11 +21,12 @@ public:
 	virtual FString GetStaticDescription() const override;
 	//~ End UBTNode Interface
 
-	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
-
 	UPROPERTY(EditAnywhere, Category = "Target")
 	float RotationInterpSpeed;
 
 	UPROPERTY(EditAnywhere, Category = "Target")
 	FBlackboardKeySelector InTargetActorKey;
+	
+protected:
+	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 };

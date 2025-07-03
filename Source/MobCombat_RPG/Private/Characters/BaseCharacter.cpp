@@ -3,6 +3,7 @@
 
 #include "MobCombat_RPG/Public/Characters/BaseCharacter.h"
 
+#include "MotionWarpingComponent.h"
 #include "AbilitySystem/MyAttributeSet.h"
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 
@@ -15,6 +16,7 @@ ABaseCharacter::ABaseCharacter()
 
 	WarriorAbilitySystemComponent = CreateDefaultSubobject<UWarriorAbilitySystemComponent>(TEXT("WarriorAbilitySystemComponent"));
 	WarriorAttributeSet = CreateDefaultSubobject<UMyAttributeSet>(TEXT("WarriorAttributeSet"));
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 }
 
 UAbilitySystemComponent* ABaseCharacter::GetAbilitySystemComponent() const

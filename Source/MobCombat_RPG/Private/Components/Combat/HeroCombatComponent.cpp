@@ -4,7 +4,6 @@
 #include "Components/Combat/HeroCombatComponent.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
-#include "WarriorDebugHelper.h"
 #include "WarriorGamePlayTags.h"
 #include "Abilities/GameplayAbilityTypes.h"
 #include "Items/Weapons/WarriorHeroWeapon.h"
