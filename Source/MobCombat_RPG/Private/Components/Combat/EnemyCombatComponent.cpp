@@ -4,6 +4,7 @@
 #include "Components/Combat/EnemyCombatComponent.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "WarriorFunctionLibrary.h"
 #include "WarriorGamePlayTags.h"
 
 void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
@@ -12,15 +13,17 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 
 	OverlappedActors.AddUnique(HitActor);
 
-	//TODO:: Implement block check
+	// Implement block check
     bool bIsValidBlock = false;
-    
-    const bool bIsPlayerBlocking = false;
+
+	// Activation Owned Tag => Player_Status_Blocking:
+    const bool bIsPlayerBlocking = UWarriorFunctionLibrary::NativeDoesActorHaveGameplayTag(HitActor, WarriorGamePlayTags::Player_Status_Blocking);
     const bool bIsMyAttackUnblockable = false;
 
 	if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
     {
-    	//TODO::check if the block is valid
+		// valid only if both are facing each-other:
+		bIsValidBlock = UWarriorFunctionLibrary::IsValidBlock(GetOwningPawn(), HitActor);
     }
 
 	FGameplayEventData EventDataPayload;
@@ -29,7 +32,11 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 
 	if (bIsValidBlock)
 	{
-		//TODO::Handle successful block
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+			HitActor,
+			WarriorGamePlayTags::Player_Event_SuccessfulBlock,
+			EventDataPayload
+		);
 	} else
 	{
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(

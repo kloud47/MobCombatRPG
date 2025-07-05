@@ -4,6 +4,7 @@
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 
 #include "WarriorDebugHelper.h"
+#include "WarriorGamePlayTags.h"
 #include "WarriorTypes/WarriorStructTypes.h"
 #include "AbilitySystem/Abilities/WarriorHeroGameplayAbility.h"
 
@@ -20,6 +21,15 @@ void UWarriorAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& I
 
 void UWarriorAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
+	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(WarriorGamePlayTags::InputTag_MustBeHeld)) return;
+
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag) && AbilitySpec.IsActive())
+		{
+			CancelAbilityHandle(AbilitySpec.Handle);//  Cancels the ability indicated by passed in spec handle. If handle is not found among reactivated abilities nothing happens
+		}
+	}
 }
 
 void  UWarriorAbilitySystemComponent::GrantHeroWeaponAbilities(const TArray<FWarriorHeroAbilitySet>& InDefaultWeaponAbilities, int32 ApplyLevel,
