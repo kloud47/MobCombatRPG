@@ -1,0 +1,42 @@
+// Priyanshu Shukla All Rights Reserved
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "WarriorProjectileBase.generated.h"
+
+class UNiagaraComponent;
+class UBoxComponent;
+class UProjectileMovementComponent;
+
+UENUM(BlueprintType)
+enum class EProjectileDamagePolicy : uint8
+{
+	OnHit,
+	OnBeginOverlap
+};
+
+UCLASS()
+class MOBCOMBAT_RPG_API AWarriorProjectileBase : public AActor
+{
+	GENERATED_BODY()
+	
+public:	
+	AWarriorProjectileBase();
+
+protected:
+	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Projectile")
+	UBoxComponent* ProjectileCollisionBox;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Projectile")
+	UNiagaraComponent* ProjectileNiagaraComponent;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Projectile")
+	UProjectileMovementComponent* ProjectileMovementComp;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Projectile")
+	EProjectileDamagePolicy ProjectileDamagePolicy = EProjectileDamagePolicy::OnHit;
+};
