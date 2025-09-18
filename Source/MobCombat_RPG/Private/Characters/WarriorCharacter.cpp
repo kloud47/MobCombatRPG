@@ -2,6 +2,7 @@
 
 #include "Characters/WarriorCharacter.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
 #include "WarriorDebugHelper.h"
 #include "WarriorGamePlayTags.h"
@@ -100,6 +101,9 @@ void AWarriorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	WarriorInputComponent->BindNativeInputAction(InputConfig, WarriorGamePlayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 	WarriorInputComponent->BindNativeInputAction(InputConfig, WarriorGamePlayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
 
+	WarriorInputComponent->BindNativeInputAction(InputConfig, WarriorGamePlayTags::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
+	WarriorInputComponent->BindNativeInputAction(InputConfig, WarriorGamePlayTags::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
+	
 	// Binding on basis of Events:
 	WarriorInputComponent->BindAbilityInputAction(InputConfig, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);	
 }
@@ -134,6 +138,22 @@ void AWarriorCharacter::Input_Look(const FInputActionValue& Value)
 	{
 		AddControllerPitchInput(LookDirection.Y);
 	}
+}
+
+void AWarriorCharacter::Input_SwitchTargetTriggered(const FInputActionValue& Value)
+{
+	SwitchDirection = Value.Get<FVector2D>();
+}
+
+void AWarriorCharacter::Input_SwitchTargetCompleted(const FInputActionValue& Value)
+{
+	FGameplayEventData Data;
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		SwitchDirection.X>0.f ? WarriorGamePlayTags::Player_Event_SwitchTarget_Right : WarriorGamePlayTags::Player_Event_SwitchTarget_Left,
+		Data
+	);
 }
 
 void AWarriorCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)

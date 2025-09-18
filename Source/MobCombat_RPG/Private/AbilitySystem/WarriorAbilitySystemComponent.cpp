@@ -15,7 +15,22 @@ void UWarriorAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& I
 	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
 		if (!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
-		TryActivateAbility(AbilitySpec.Handle);// calls the activate ability event in Blueprints
+
+		if (InInputTag.MatchesTag(WarriorGamePlayTags::InputTag_Toggleable))
+		{
+			if (AbilitySpec.IsActive())
+			{
+				CancelAbilityHandle(AbilitySpec.Handle);
+			}
+			else
+			{
+				TryActivateAbility(AbilitySpec.Handle);
+			}
+		} else
+		{
+			// calls the activate ability event in Blueprints
+			TryActivateAbility(AbilitySpec.Handle);
+		}
 	}
 }
 
