@@ -39,8 +39,8 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Projectile")
 	UProjectileMovementComponent* ProjectileMovementComp;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Projectile")
-	EProjectileDamagePolicy ProjectileDamagePolicy = EProjectileDamagePolicy::OnHit;
+	UPROPERTY(BlueprintReadWrite, Category="Projectile")
+	EProjectileDamagePolicy ProjectileDamagePolicy;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Projectile", meta = (ExposeOnSpawn = "true"))
 	FGameplayEffectSpecHandle ProjectileDamageEffectSpecHandle;
@@ -56,4 +56,6 @@ protected:
 	
 private:
 	void HandleApplyProjectileDamage(APawn* InHitPawn,const FGameplayEventData& InPayload);
+
+	TArray<AActor*> OverlappedActors;
 };

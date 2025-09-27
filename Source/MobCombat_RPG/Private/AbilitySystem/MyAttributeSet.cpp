@@ -46,6 +46,19 @@ void UMyAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModC
 
 		SetCurrentRage(NewCurrentRage);
 
+		if (GetCurrentRage() == GetMaxRage())
+		{
+			// This is an Activation required tag -> for activating the Rage Gameplay Ability:
+			UWarriorFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), WarriorGamePlayTags::Player_Status_Rage_Full);
+		} else if (GetCurrentRage() == 0.f)
+		{
+			UWarriorFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), WarriorGamePlayTags::Player_Status_Rage_None);
+		} else
+		{
+			UWarriorFunctionLibrary::RemoveGameplayTagFromActorIfFound(Data.Target.GetAvatarActor(), WarriorGamePlayTags::Player_Status_Rage_Full);
+			UWarriorFunctionLibrary::RemoveGameplayTagFromActorIfFound(Data.Target.GetAvatarActor(), WarriorGamePlayTags::Player_Status_Rage_None);
+		}
+
 		if (UHeroUIComponent* HeroUIComponent = CachedPawnUIInterface->GetHeroUIComponent())
 		{
 			HeroUIComponent->OnCurrentRageChanged.Broadcast(GetCurrentRage()/GetMaxRage());
