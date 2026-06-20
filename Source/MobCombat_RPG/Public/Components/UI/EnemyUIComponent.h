@@ -6,6 +6,7 @@
 #include "Components/UI/PawnUIComponent.h"
 #include "EnemyUIComponent.generated.h"
 
+class UWarriorWidgetBase;
 /**
  * 
  */

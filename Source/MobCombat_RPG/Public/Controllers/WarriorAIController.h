@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "WarriorAIController.generated.h"
 
+struct FAIStimulus;
 class UAIPerceptionComponent;
 class UAISenseConfig_Sight;
 /**

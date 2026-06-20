@@ -3,7 +3,6 @@
 
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 
-#include "WarriorDebugHelper.h"
 #include "WarriorGamePlayTags.h"
 #include "WarriorTypes/WarriorStructTypes.h"
 #include "AbilitySystem/Abilities/WarriorHeroGameplayAbility.h"
@@ -64,14 +63,14 @@ void  UWarriorAbilitySystemComponent::GrantHeroWeaponAbilities(const TArray<FWar
 		OutGrantedAbilitySpecHandles.AddUnique(GiveAbility(AbilitySpec));
 	}
 
-	for (const FWarriorHeroSpecialAbilitySet& AbilitySet: InSpecialWeaponAbilities)
+	for (const FWarriorHeroSpecialAbilitySet& SpecialAbilitySet: InSpecialWeaponAbilities)
 	{
-		if (!AbilitySet.IsValid()) continue;
+		if (!SpecialAbilitySet.IsValid()) continue;
 
-		FGameplayAbilitySpec AbilitySpec(AbilitySet.AbilityToGrant);
+		FGameplayAbilitySpec AbilitySpec(SpecialAbilitySet.AbilityToGrant);
 		AbilitySpec.SourceObject = GetAvatarActor();
 		AbilitySpec.Level = ApplyLevel;
-		AbilitySpec.DynamicAbilityTags.AddTag(AbilitySet.InputTag);
+		AbilitySpec.DynamicAbilityTags.AddTag(SpecialAbilitySet.InputTag);
 		
 		OutGrantedAbilitySpecHandles.AddUnique(GiveAbility(AbilitySpec));
 	}
