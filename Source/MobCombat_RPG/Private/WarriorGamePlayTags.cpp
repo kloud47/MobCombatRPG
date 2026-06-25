@@ -79,6 +79,7 @@ namespace WarriorGamePlayTags
 	
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Status_Strafing, "Enemy.Status.Strafing");
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Status_Defend, "Enemy.Status.Defend");
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Status_Unblockable, "Enemy.Status.Unblockable");
 	
 	/** Shared Tags ------------------------------------------------------------**/
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact,"Shared.Ability.HitReact");

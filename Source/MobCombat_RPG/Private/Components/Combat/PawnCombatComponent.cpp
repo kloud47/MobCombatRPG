@@ -4,7 +4,6 @@
 #include "Components/Combat/PawnCombatComponent.h"
 
 
-#include "WarriorDebugHelper.h"
 #include "Components/BoxComponent.h"
 #include "Items/Weapons/WarriorWeaponBase.h"
 
@@ -51,19 +50,12 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDama
 {
 	if (ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
 	{
-		AWarriorWeaponBase* WeaponToToggle = GetCharacterCurrentEquippedWeapon();
-		check(WeaponToToggle);
-
-		if (bShouldEnable)
-		{
-			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-		} else
-		{
-			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-			OverlappedActors.Empty();// Remove the Overlapped Actors after performing the Hit and Collision is Disabled:
-		}
+		ToggleCurrentEquippedWeaponCollision(bShouldEnable);
 	}
-	// TODO: handle body Collision boxes:
+	else
+	{
+		ToggleBodyBoxCollision(bShouldEnable, ToggleDamageType);
+	}
 }
 
 void UPawnCombatComponent::OnHitTargetActor(AActor* HitActor)
@@ -72,4 +64,24 @@ void UPawnCombatComponent::OnHitTargetActor(AActor* HitActor)
 
 void UPawnCombatComponent::OnWeaponPulledFromTargetActor(AActor* InteractedActor)
 {
+}
+
+void UPawnCombatComponent::ToggleCurrentEquippedWeaponCollision(bool bShouldEnable)
+{
+	AWarriorWeaponBase* WeaponToToggle = GetCharacterCurrentEquippedWeapon();
+	check(WeaponToToggle);
+
+	if (bShouldEnable)
+	{
+		WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	} else
+	{
+		WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		OverlappedActors.Empty();// Remove the Overlapped Actors after performing the Hit and Collision is Disabled:
+	}
+}
+
+void UPawnCombatComponent::ToggleBodyBoxCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
+{
+	
 }

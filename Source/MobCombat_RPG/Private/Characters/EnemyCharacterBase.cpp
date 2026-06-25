@@ -4,6 +4,7 @@
 #include "Characters/EnemyCharacterBase.h"
 
 #include "WarriorDebugHelper.h"
+#include "WarriorFunctionLibrary.h"
 #include "Components/BoxComponent.h"
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "Components/UI/EnemyUIComponent.h"
@@ -85,6 +86,13 @@ void AEnemyCharacterBase::PostEditChangeProperty(struct FPropertyChangedEvent& P
 void AEnemyCharacterBase::OnBodyCollisionBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                                          UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (APawn* HitPawn = Cast<APawn>(OtherActor))
+	{
+		if (UWarriorFunctionLibrary::IsTargetPawnHostile(this, HitPawn)) // Decides using AIController Generic TeamID
+		{
+			EnemyCombatComponent->OnHitTargetActor(HitPawn);
+		}
+	}
 }
 
 void AEnemyCharacterBase::InitEnemyStartupData() const

@@ -6,6 +6,8 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "WarriorFunctionLibrary.h"
 #include "WarriorGamePlayTags.h"
+#include "Characters/EnemyCharacterBase.h"
+#include "Components/BoxComponent.h"
 
 void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
@@ -18,7 +20,7 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 
 	// Activation Owned Tag => Player_Status_Blocking:
     const bool bIsPlayerBlocking = UWarriorFunctionLibrary::NativeDoesActorHaveGameplayTag(HitActor, WarriorGamePlayTags::Player_Status_Blocking);
-    const bool bIsMyAttackUnblockable = false;
+    const bool bIsMyAttackUnblockable = UWarriorFunctionLibrary::NativeDoesActorHaveGameplayTag(GetOwningPawn(), WarriorGamePlayTags::Enemy_Status_Unblockable);
 
 	if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
     {
@@ -44,5 +46,32 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 			WarriorGamePlayTags::Shared_Event_MeleeHit,
 			EventDataPayload
 		);
+	}
+}
+
+void UEnemyCombatComponent::ToggleBodyBoxCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
+{
+	AEnemyCharacterBase* OwningEnemyCharacter = GetOwningPawn<AEnemyCharacterBase>();
+	check(OwningEnemyCharacter);
+
+	UBoxComponent* LeftHandCollisionBox = OwningEnemyCharacter->GetLeftHandCollisionBox();
+	UBoxComponent* RightHandCollisionBox = OwningEnemyCharacter->GetRightHandCollisionBox();
+	check(LeftHandCollisionBox && RightHandCollisionBox);
+
+	switch (ToggleDamageType)
+	{
+	case EToggleDamageType::LeftHand:
+		LeftHandCollisionBox->SetCollisionEnabled(bShouldEnable? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+		break;
+	case EToggleDamageType::RightHand:
+		RightHandCollisionBox->SetCollisionEnabled(bShouldEnable? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+		break;
+	default:
+		break;
+	}
+
+	if (!bShouldEnable)
+	{
+		OverlappedActors.Empty();
 	}
 }
