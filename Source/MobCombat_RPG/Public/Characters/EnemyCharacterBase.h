@@ -6,6 +6,7 @@
 #include "Characters/BaseCharacter.h"
 #include "EnemyCharacterBase.generated.h"
 
+class UWidgetComponent;
 class UBoxComponent;
 class UEnemyUIComponent;
 class UEnemyCombatComponent;
@@ -29,6 +30,8 @@ public:
 	//~ End PawnUIInterface Interface
 
 protected:
+	virtual void BeginPlay() override;
+	
 	//~ Begin APawn Interface.
 	virtual void PossessedBy(AController* NewController) override;
 	//~ End APawn Interface.
@@ -53,10 +56,13 @@ protected:
 	FName RightHandCollisionBoxAttachBoneName;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
-	UBoxComponent* RightHandCollisionBox;
+	TObjectPtr<UBoxComponent> RightHandCollisionBox;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
-	UEnemyUIComponent* EnemyUIComponent;
+	TObjectPtr<UEnemyUIComponent> EnemyUIComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
+	TObjectPtr<UWidgetComponent> EnemyHealthWidgetComponent;
 
 	UFUNCTION()
 	virtual void OnBodyCollisionBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

@@ -6,11 +6,13 @@
 #include "WarriorDebugHelper.h"
 #include "WarriorFunctionLibrary.h"
 #include "Components/BoxComponent.h"
+#include "Components/WidgetComponent.h"
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "Components/UI/EnemyUIComponent.h"
 #include "DataAssets/StartupData/DA_StartupEnemyData.h"
 #include "Engine/AssetManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Widget/WarriorWidgetBase.h"
 
 AEnemyCharacterBase::AEnemyCharacterBase()
 {
@@ -29,6 +31,9 @@ AEnemyCharacterBase::AEnemyCharacterBase()
 	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>(TEXT("EnemyCombatComponent"));
 
 	EnemyUIComponent = CreateDefaultSubobject<UEnemyUIComponent>(TEXT("EnemyUIComponent"));
+
+	EnemyHealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("EnemyHealthWidgetComponent"));
+	EnemyHealthWidgetComponent->SetupAttachment(GetMesh());
 
 	LeftHandCollisionBox = CreateDefaultSubobject<UBoxComponent>("LeftHandCollisionBox");
 	LeftHandCollisionBox->SetupAttachment(GetMesh());
@@ -54,6 +59,16 @@ UPawnUIComponent* AEnemyCharacterBase::GetPawnUIComponent() const
 UEnemyUIComponent* AEnemyCharacterBase::GetEnemyUIComponent() const
 {
 	return EnemyUIComponent;
+}
+
+void AEnemyCharacterBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (UWarriorWidgetBase* HealthWidget = Cast<UWarriorWidgetBase>(EnemyHealthWidgetComponent->GetUserWidgetObject())) // Returns the user widget object displayed by this component
+	{
+		HealthWidget->InitEnemyCreatedWidget(this);
+	}
 }
 
 void AEnemyCharacterBase::PossessedBy(AController* NewController)
@@ -99,20 +114,30 @@ void AEnemyCharacterBase::InitEnemyStartupData() const
 {
 	if (!CharacterStartupData.IsNull())
 	{
+		// Capturing a weak pointer to 'this' safely
+		TWeakObjectPtr<const AEnemyCharacterBase> WeakThis(this);
+		
 		UAssetManager::GetStreamableManager().RequestAsyncLoad(
 			CharacterStartupData.ToSoftObjectPath(),
 			FStreamableDelegate::CreateLambda(
-				[this]()
+				[WeakThis]()
 				{
-						if (UDA_StartupEnemyData* LoadedData = Cast<UDA_StartupEnemyData>(CharacterStartupData.Get()))
-						{
-							LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
-							// Debug::Print("Enemy startup data Loaded", FColor::Green);
-						}
-						else
-						{
-							Debug::Print("Failed to load Enemy startup data", FColor::Green);
-						}
+
+					const AEnemyCharacterBase* StrongThis = WeakThis.Get();
+				   if (!StrongThis)
+				   {
+					   return;
+				   }
+					// 2. Safely access the data through the StrongThis pointer
+					if (UDA_StartupEnemyData* LoadedData = Cast<UDA_StartupEnemyData>(StrongThis->CharacterStartupData.Get()))
+					{
+						LoadedData->GiveToAbilitySystemComponent(StrongThis->WarriorAbilitySystemComponent);
+						// Debug::Print("Enemy startup data Loaded", FColor::Green);
+					}
+					else
+					{
+						Debug::Print("Failed to load Enemy startup data", FColor::Green);
+					}
 				})
 		);
 	}

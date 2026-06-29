@@ -19,15 +19,14 @@ class MOBCOMBAT_RPG_API UAbilityTask_WaitSpawnEnemies : public UAbilityTask
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintCallable, Category="Warrior|AbilityTasks", meta =(DisplayName="Wait Gameplay Event And Spawn Enemies", HidePin="OwningAbility", DefaultToSelf="OwningAbility", BlueprintInternalUseOnly = "true"))
+	UFUNCTION(BlueprintCallable, Category="Warrior|AbilityTasks", meta =(DisplayName="Wait Gameplay Event And Spawn Enemies", HidePin="OwningAbility", DefaultToSelf="OwningAbility", BlueprintInternalUseOnly = "true", NumToSpawn="1", RandomSpawnRadius="200"))
 	static 	UAbilityTask_WaitSpawnEnemies* WaitSpawnEnemies(
 		UGameplayAbility* OwningAbility,
 		FGameplayTag EventTag,
 		TSoftClassPtr<AEnemyCharacterBase> SoftEnemyClassToSpawn,
 		int32 NumToSpawn,
 		const FVector& SpawnOrigin,
-		float RandomSpawnRadius,
-		const FRotator& SpawnRotation
+		float RandomSpawnRadius
 	);
 
 	UPROPERTY(BlueprintAssignable)
@@ -36,11 +35,19 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FWaitSpawnEnemiesDelegate DidNotSpawn;
 
+	virtual void Activate() override;
+	virtual void OnDestroy(bool bInOwnerFinished) override;
+	
 private:
 	FGameplayTag CachedEventTag;
 	TSoftClassPtr<AEnemyCharacterBase> CachedSoftEnemyClassToSpawn;
 	int32 CachedNumToSpawn;
 	FVector CachedSpawnOrigin;
 	float CachedRandomSpawnRadius;
-	FRotator CachedSpawnRotation;
+
+	FDelegateHandle DelegateHandle;
+
+	void OnGameplayEventReceived(const FGameplayEventData* InPlayLoad);
+
+	void OnEnemyClassLoaded();
 };

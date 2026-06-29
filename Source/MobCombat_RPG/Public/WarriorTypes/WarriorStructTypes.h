@@ -11,6 +11,7 @@ class UInputMappingContext;
 class UWarriorHeroGameplayAbility;
 class UHeroLinkedAnimLayer;
 
+
 USTRUCT(BlueprintType)
 struct FWarriorHeroAbilitySet
 {
@@ -31,7 +32,7 @@ struct FWarriorHeroSpecialAbilitySet : public FWarriorHeroAbilitySet
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSoftObjectPtr<UMaterialInterface> AbilityIconMaterial;
+	TSoftObjectPtr<UMaterialInterface> SoftAbilityIconMaterial;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "Player.Cooldown"))
 	FGameplayTag AbilityCooldownTag;
@@ -57,4 +58,7 @@ struct FWarriorHeroWeaponData
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FScalableFloat WeaponBaseDamage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSoftObjectPtr<UTexture2D> SoftWeaponIconTexture;
 };
