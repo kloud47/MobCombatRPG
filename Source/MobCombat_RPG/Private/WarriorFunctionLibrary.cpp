@@ -11,6 +11,7 @@
 #include "WarriorDebugHelper.h"
 #include "WarriorGamePlayTags.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "WarriorTypes/WarriorCountdownAction.h"
 
 UWarriorAbilitySystemComponent* UWarriorFunctionLibrary::NativeGetWarriorASCFromActor(AActor* InActor)
 {
@@ -152,4 +153,25 @@ void UWarriorFunctionLibrary::CountDown(const UObject* WorldContextObject, float
 	float& OutRemainingTime, EWarriorCountDownActionInput CountDownInput,
 	EWarriorCountDownActionOutput& CountDownOutput, FLatentActionInfo LatentInfo)
 {
+	if (UWorld* World = GEngine->GetWorldFromContextObject(
+			WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	{
+		FLatentActionManager& Manager = World->GetLatentActionManager();
+
+		FWarriorCountdownAction* FoundAction = Manager.FindExistingAction<FWarriorCountdownAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+
+		if (CountDownInput == EWarriorCountDownActionInput::Start){
+			// Prevent duplicate actions on the same node
+			if (FoundAction == nullptr)
+			{
+				Manager.AddNewAction(LatentInfo.CallbackTarget, 
+									 LatentInfo.UUID,
+									 new FWarriorCountdownAction(TotalTime, UpdateInterval, OutRemainingTime, CountDownOutput, LatentInfo));
+			}
+		}
+		else if (CountDownInput == EWarriorCountDownActionInput::Cancel)
+		{
+			if (FoundAction) FoundAction->CancelAction();	
+		}
+	}
 }
